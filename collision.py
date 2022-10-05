@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+import random
+
+pi = np.pi
 
 class Particle:
     # Create particle on 2-d space
@@ -19,19 +20,31 @@ class Particle:
 
 class Simulation:
     # Simulation
+    
+    ParticleClass = Particle
+    def __init__(self, nParticles, radii):
+        self.init_particles(nParticles, radii)
 
-    def __init__(self, n, radius):
+    def init_particles(self, nParticles, radii):
+        self.particles = []
 
+        for i in range(nParticles):
+            x, y = random.random()*10, random.random()*10
+            vx, vy = random.random(), random.random()
+            rad = random.random()*radii
 
-    def setup_animation(self):
-    def init_animation(self):
-
-
+            particle = self.ParticleClass(x, y, vx, vy, rad)
+            self.particles.append(particle)
 
 
 
 if __name__ == "__main__":
-    nParticles  =   20
-    radii       =   1
-    sim         =   Simulation(nParticles, radii)
-    sim.init_animation()
+    nParticles      =   20
+    radii           =   0.1
+    sim             =   Simulation(nParticles, radii)
+
+    for i in range(nParticles):
+        pos = sim.particles[i].position
+        vel = sim.particles[i].velocity
+        rad = sim.particles[i].radius
+        print(f"Particle {i} : pos{pos}, vel{vel}, rad{rad}")
