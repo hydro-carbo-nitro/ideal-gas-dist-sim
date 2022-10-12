@@ -26,11 +26,11 @@ def init_particles(idx_arr, radii):
                                                         ('vel', float,  (2,)),
                                                         ('rad', float)])
 
-    particles_arr['pos'][:, 0]  =   2.0*idx_arr
-    particles_arr['pos'][:, 1]  =   (-2.0)*idx_arr
+    particles_arr['rad']        =   radii
+    particles_arr['pos'][:, 0]  =   np.random.rand(len(idx_arr)) * 30.0 - 15.0
+    particles_arr['pos'][:, 1]  =   np.random.rand(len(idx_arr)) * 30.0 - 15.0
     particles_arr['vel'][:, 0]  =   np.random.rand(len(idx_arr)) * 0.2
     particles_arr['vel'][:, 1]  =   np.random.rand(len(idx_arr)) * 0.2
-    particles_arr['rad']        =   radii
 
     return particles_arr
 
@@ -69,6 +69,6 @@ def update(dt):
     return line,
 
 print(particles['vel'])
-animation       =   FuncAnimation(fig, update, interval=10)
+animation       =   FuncAnimation(fig, update, interval=5)
 plt.show()
 
