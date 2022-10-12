@@ -1,9 +1,13 @@
 #!/usr/bin/python3
 
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 import random
 
-pi = np.pi
+resolution  =   36
+pi          =   np.pi
+angle       =   np.linspace(0, 2*pi, resolution)
 
 class Particle:
     # Create particle on 2-d space
@@ -22,29 +26,47 @@ class Simulation:
     # Simulation
     
     ParticleClass = Particle
+    
     def __init__(self, nParticles, radii):
+        self.set_fig()
         self.init_particles(nParticles, radii)
+        self.anim()
+
+    def set_fig(self):
+        self.fig     =   plt.figure(figsize=(7,7))
+        self.ax      =   self.fig.add_axes([0, 0, 1, 1], frameon=False)       # [Top, Bottom, Width, Height]
+        
+        self.ax.set_xlim(-10, 10)                                        # x-range -10 ~ 10
+        self.ax.set_ylim(-10, 10)                                        # y-range -10 ~ 10
+        self.ax.set_xticks([])                                           # what is this?
+        self.ax.set_yticks([])                                           # what is this?(2)
+
 
     def init_particles(self, nParticles, radii):
-        self.particles = []
+        
+        self.particles      =   np.zeros(nParticles, dtype=[('position',    float,  (2, )),
+                                                            ('velocity',    float,  (2, )),
+                                                            ('radius',      float),
+                                                            ('circle',      float,  (resolution, resolution))])
+        # input the quantities of particle
 
-        for i in range(nParticles):
-            x, y = random.random()*10, random.random()*10
-            vx, vy = random.random(), random.random()
-            rad = random.random()*radii
+        for idx, particle in enumerate(self.particles):
+            particle['position']    =   [-3 + 6*idx, 0]             # (x, y)
+            particle['velocity']    =   [idx, 0]                    # (vx, vy)
+            particle['radius']      =   radii
+        
 
-            particle = self.ParticleClass(x, y, vx, vy, rad)
-            self.particles.append(particle)
+    def anim(self):
+        animation   =   FuncAnimation(self.fig, self.update, interval=10)
+        plt.show()
 
-
+    def update(self, dt):
+        for idx, particle in enumerate(self.particles):
+            particle['circle'][0]   =   particle['position'][0] + particle['radius']*np.cos(angle)
+            particle['circle'][1]   =   particle['position'][1] + particle['radius']*np.sin(angle)
 
 if __name__ == "__main__":
-    nParticles      =   20
-    radii           =   0.1
-    sim             =   Simulation(nParticles, radii)
 
-    for i in range(nParticles):
-        pos = sim.particles[i].position
-        vel = sim.particles[i].velocity
-        rad = sim.particles[i].radius
-        print(f"Particle {i} : pos{pos}, vel{vel}, rad{rad}")
+    nParticles      =   2
+    radii           =   0.5
+    sim             =   Simulation(nParticles, radii)
