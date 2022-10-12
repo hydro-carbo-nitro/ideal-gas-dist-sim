@@ -3,6 +3,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+import random
 
 resolution      =   120
 pi              =   np.pi
@@ -27,8 +28,8 @@ def init_particles(idx_arr, radii):
 
     particles_arr['pos'][:, 0]  =   2.0*idx_arr
     particles_arr['pos'][:, 1]  =   (-2.0)*idx_arr
-    particles_arr['vel'][:, 0]  =   0.1
-    particles_arr['vel'][:, 1]  =   0.0
+    particles_arr['vel'][:, 0]  =   np.random.rand(len(idx_arr)) * 0.2
+    particles_arr['vel'][:, 1]  =   np.random.rand(len(idx_arr)) * 0.2
     particles_arr['rad']        =   radii
 
     return particles_arr
@@ -53,12 +54,21 @@ fig, ax, line,  =   init_fig()
 
 def update(dt):        
     for idx in setIdx:
-        circles[idx]['x']   +=   particles[idx]['vel'][0]
-        circles[idx]['y']   +=   particles[idx]['vel'][1]
-    
+        if not (particles[idx]['pos'][0] >= -(15.0 - particles[idx]['rad']) and particles[idx]['pos'][0] <= (15.0 - particles[idx]['rad'])): 
+            particles[idx]['vel'][0] *= -1.0
+
+        if not (particles[idx]['pos'][1] >= -(15.0 - particles[idx]['rad']) and particles[idx]['pos'][1] <= (15.0 - particles[idx]['rad'])): 
+            particles[idx]['vel'][1] *= -1.0
+
+        particles[idx]['pos'][0]    +=  particles[idx]['vel'][0]
+        particles[idx]['pos'][1]    +=  particles[idx]['vel'][1]
+        circles[idx]['x']           +=  particles[idx]['vel'][0]
+        circles[idx]['y']           +=  particles[idx]['vel'][1]
+        
     line.set_data(circles['x'], circles['y'])
     return line,
 
+print(particles['vel'])
 animation       =   FuncAnimation(fig, update, interval=10)
 plt.show()
 
