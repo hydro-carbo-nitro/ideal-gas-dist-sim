@@ -26,7 +26,7 @@ def init_fig():
     return fig, ax, line,
    
 def init_particles(idx_arr, radii):
-    p_arr = np.zeros(len(idx_arr), dtype=[('pos', float,  (2,)), ('vel', float,  (2,)), ('rad', float)])
+	p_arr = np.zeros(len(idx_arr), dtype=[('pos', float,  (2,)), ('vel', float,  (2,)), ('rad', float)])
 
 	p_arr['rad'] = radii
 	p_arr['pos'][:, 0]	=	(L - p_arr['rad']) * (2 * np.random.rand(len(idx_arr)) - 1)
@@ -44,7 +44,7 @@ def init_particles(idx_arr, radii):
 #	###################################################################################################
 
 
-    idx = 0
+	idx = 0
     while(idx < len(idx_arr)):	#	search for all index
 
         judge, target	=	0
