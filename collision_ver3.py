@@ -27,9 +27,9 @@ def init_fig():
    
 def init_particles(idx_arr, radii):
 	#	array of particles
-    p_arr = np.zeros(len(idx_arr), dtype=[	('pos', float,  (2,)),
-											('vel', float,  (2,)),
-											('rad', float)])
+    p_arr	=	np.zeros(len(idx_arr), dtype=[	('pos', float,  (2,)),
+												('vel', float,  (2,)),
+												('rad', float)])
 
 	#	###################################################################################################
 	#	initialize all particles
