@@ -26,33 +26,22 @@ def init_fig():
     return fig, ax, line,
    
 def init_particles(idx_arr, radii):
-	#	array of particles
-    p_arr	=	np.zeros(len(idx_arr), dtype=[	('pos', float,  (2,)),
-												('vel', float,  (2,)),
-												('rad', float)])
+    p_arr = np.zeros(len(idx_arr), dtype=[('pos', float,  (2,)), ('vel', float,  (2,)), ('rad', float)])
 
-	#	###################################################################################################
-	#	initialize all particles
-	#
-	#	rad		:	Radius of each particles.
-	#	pos		:	Position of each particles. p_arr['pos'][0] = x, p_arr['pos'][1] = y.
-	#	vel		:	Velocity of each particles.
-	#	###################################################################################################
-
-	p_arr['rad']		=	radii
-    p_arr['pos'][:, 0]	=	(L - p_arr['rad']) * (2 * np.random.rand(len(idx_arr)) - 1)
-    p_arr['pos'][:, 1]	=	(L - p_arr['rad']) * (2 * np.random.rand(len(idx_arr)) - 1)
-    p_arr['vel'][:, 0]	=	np.random.rand(len(idx_arr)) * 1.0
-    p_arr['vel'][:, 1]	=	np.random.rand(len(idx_arr)) * 1.0
+	p_arr['rad'] = radii
+	p_arr['pos'][:, 0]	=	(L - p_arr['rad']) * (2 * np.random.rand(len(idx_arr)) - 1)
+	p_arr['pos'][:, 1]	=	(L - p_arr['rad']) * (2 * np.random.rand(len(idx_arr)) - 1)
+	p_arr['vel'][:, 0]	=	np.random.rand(len(idx_arr)) * 1.0
+	p_arr['vel'][:, 1]	=	np.random.rand(len(idx_arr)) * 1.0
 
 
-	#	###################################################################################################
-	#	repositioning particles which is overlapped
-	#
-	#	idx		:	Index of particle. If overlapped, change this one
-	#	target	:	Index of target particle.
-	#	judge	:	Is particle not overlapped?
-	#	###################################################################################################
+#	###################################################################################################
+#	repositioning particles which is overlapped
+#
+#	idx		:	Index of particle. If overlapped, change this one
+#	target	:	Index of target particle.
+#	judge	:	Is particle not overlapped?
+#	###################################################################################################
 
 
     idx = 0
