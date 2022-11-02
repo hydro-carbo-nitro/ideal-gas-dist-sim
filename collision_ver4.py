@@ -15,14 +15,13 @@ radii        =    2.0
 def init_fig(): 
     fig        =   plt.figure(figsize=(7, 7)) 
     ax        =   fig.add_axes([0.1, 0.1, 0.8, 0.8], frameon=True) 
-    line,   =   plt.plot([], [], 'bo', markersize=1) 
  
     ax.set_xlim(-L, L) 
     ax.set_ylim(-L, L) 
     ax.set_xticks([]) 
     ax.set_yticks([]) 
  
-    return fig, ax, line, 
+    return fig, ax
     
 def overlap(p_i, p_j): 
     dx    =    p_i['pos'][0] - p_j['pos'][0] 
@@ -69,7 +68,7 @@ def draw_circles(idx_arr, p_arr, ax):
     return circles
  
  
-fig, ax, line, = init_fig() 
+fig, ax = init_fig() 
 setIdx = np.array(list(x for x in range(nParticles))) 
 p = init_particles(setIdx, radii) 
 c = draw_circles(setIdx, p, ax) 
