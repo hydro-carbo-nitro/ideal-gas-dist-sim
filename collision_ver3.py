@@ -30,7 +30,7 @@ def overlap(p_i, p_j):
 	dy	=	p_i['pos'][1] - p_j['pos'][1]
 	d	=	p_i['rad'] + p_j['rad']
 
-	return dx**2 + dy**2 <= d**2
+	return dx**2 + dy**2 < d**2
 
 
 def init_particles(idx_arr, radii):
@@ -89,7 +89,7 @@ def init_particles(idx_arr, radii):
 def draw_circles(idx_arr, p_arr):
 	#	draw circle
 	c_arr		=	np.zeros(len(p_arr), dtype=[	('x',   float,  (resolution,)),
-						                            ('y',   float,  (resolution,))])
+								                    ('y',   float,  (resolution,))])
 	for idx in idx_arr:
 		c_arr[idx]['x']		=	p_arr[idx]['pos'][0] + p_arr[idx]['rad'] * np.cos(angle)
 		c_arr[idx]['y']		=	p_arr[idx]['pos'][1] + p_arr[idx]['rad']*np.sin(angle)
@@ -121,7 +121,6 @@ def update(dt):
 		for target in setIdx:
 			if idx != target:
 				if overlap(p[idx], p[target]):
-					print(f"[{idx}, {target}] collide")
 
 					m1, m2	=	p[idx]['mass'], p[target]['mass']
 					M = m1 + m2
@@ -135,6 +134,7 @@ def update(dt):
 					p[target]['vel']	=	u2
 
 
+	for idx in setIdx:
 		p[idx]['pos'][0]	+=  p[idx]['vel'][0]
 		p[idx]['pos'][1]	+=  p[idx]['vel'][1]
 		c[idx]['x']		 +=  p[idx]['vel'][0]
